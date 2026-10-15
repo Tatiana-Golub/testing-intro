@@ -2,13 +2,45 @@ const products = require('../../src/data/products');
 const { getProductById } = require('../../src/catalog');
 
 describe('getProductById', () => {
-  test.todo('ID 1 возвращает products[0]');
-  test.todo('ID 4 возвращает products[3]');
-  test.todo('ID 6 возвращает products[5]');
-  test.todo('ID 0 возвращает null');
-  test.todo('ID 999 возвращает null');
-  test.todo('ID -1 возвращает null');
-  test.todo("строковый ID '1' возвращает null");
-  test.todo('ID undefined возвращает null');
-  test.todo('ID NaN возвращает null');
+  describe('товар существует', () => {
+    test('возвращает товар с id 1', () => {
+      expect(getProductById(products, 1)).toEqual(products[0]);
+    });
+
+    test('возвращает товар с id 4', () => {
+      expect(getProductById(products, 4)).toEqual(products[3]);
+    });
+
+    test('возвращает товар с id 6', () => {
+      expect(getProductById(products, 6)).toEqual(products[5]);
+    });
+  });
+
+  describe('числовой id отсутствует', () => {
+    test('возвращает null для id 0', () => {
+      expect(getProductById(products, 0)).toBeNull();
+    });
+
+    test('возвращает null для id 999', () => {
+      expect(getProductById(products, 999)).toBeNull();
+    });
+
+    test('возвращает null для id -1', () => {
+      expect(getProductById(products, -1)).toBeNull();
+    });
+  });
+
+  describe('id неверного типа', () => {
+    test("возвращает null для '1'", () => {
+      expect(getProductById(products, '1')).toBeNull();
+    });
+
+    test('возвращает null для undefined', () => {
+      expect(getProductById(products, undefined)).toBeNull();
+    });
+
+    test('возвращает null для NaN', () => {
+      expect(getProductById(products, NaN)).toBeNull();
+    });
+  });
 });
